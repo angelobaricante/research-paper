@@ -1,0 +1,4 @@
+metric,test,statistic,p_value,significant,effect_size,effect_size_name,prng_mean,qrng_mean
+RL_success,Welch t-test,,,False,0.0,Cohen's d,1.0,1.0
+RL_reward,Mann-Whitney U,1171.5,0.5902125465606851,False,0.06279999999999997,Rank-biserial r,288.2584,291.5056
+RL_steps,Mann-Whitney U,1171.5,0.5902125465606851,False,0.06279999999999997,Rank-biserial r,90.16,93.44

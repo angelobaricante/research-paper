@@ -1,0 +1,8 @@
+metric,test,statistic,p_value,significant,effect_size,effect_size_name,prng_mean,qrng_mean
+path_length,Mann-Whitney U,4625.5,0.36027902494144326,False,0.07489999999999997,Rank-biserial r,90.36,94.0
+tortuosity,Mann-Whitney U,4625.5,0.36027902494144326,False,0.07489999999999997,Rank-biserial r,2.51,2.6111111111111116
+dead_end_count,Mann-Whitney U,5353.5,0.38178277537528305,False,-0.07069999999999999,Rank-biserial r,11.71,11.52
+junction_3_proportion,Mann-Whitney U,5247.5,0.09290567692706865,False,-0.0495000000000001,Rank-biserial r,0.9978888888888889,0.9924469696969698
+junction_4_proportion,Mann-Whitney U,4752.5,0.09290567692706865,False,0.04949999999999999,Rank-biserial r,0.002111111111111111,0.007553030303030301
+turn_count,Mann-Whitney U,5041.0,0.920376229347849,False,-0.008199999999999985,Rank-biserial r,12.22,12.26
+straight_count,Mann-Whitney U,5399.5,0.3270630506638533,False,-0.07990000000000008,Rank-biserial r,8.18,7.71
