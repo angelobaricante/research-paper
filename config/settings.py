@@ -29,32 +29,34 @@ QRNG_RETRY_ATTEMPTS = 3
 QRNG_RETRY_BACKOFF = 2.0  # seconds, multiplied each retry
 
 # ── Maze Generation ───────────────────────────────────────────────────────
-MAZE_CELLS = 10                          # 10x10 logical cells
-MAZE_GRID_SIZE = 2 * MAZE_CELLS + 1     # 21x21 actual grid
+MAZE_CELLS = 7                            # 7x7 logical cells
+MAZE_GRID_SIZE = 2 * MAZE_CELLS + 1      # 15x15 actual grid
 START_POS = (1, 1)
-GOAL_POS = (MAZE_GRID_SIZE - 2, MAZE_GRID_SIZE - 2)  # (19, 19)
+GOAL_POS = (MAZE_GRID_SIZE - 2, MAZE_GRID_SIZE - 2)  # (13, 13)
 
 # ── Gymnasium Environment ─────────────────────────────────────────────────
-MAX_STEPS = 1000
+MAX_STEPS = 400                           # ~5x mean optimal for 7x7
+FRAME_STACK = 4                           # stack last 4 observations
 
 # Rewards
-REWARD_GOAL = 200.0
-REWARD_STEP = -0.01
-REWARD_COLLISION = -0.5
-REWARD_TIMEOUT = -10.0
+REWARD_GOAL = 100.0
+REWARD_STEP = -0.1
+REWARD_COLLISION = -0.2
+REWARD_TIMEOUT = -5.0
+REWARD_REVISIT = -0.3
 
 # ── A2C Hyperparameters ──────────────────────────────────────────────────
 A2C_CONFIG = {
     "learning_rate": 7e-4,
-    "n_steps": 512,
-    "ent_coef": 0.01,
+    "n_steps": 256,
+    "ent_coef": 0.02,
     "gamma": 0.99,
     "gae_lambda": 0.95,
     "vf_coef": 0.5,
     "max_grad_norm": 0.5,
-    "policy_kwargs": {"net_arch": [64, 64]},
+    "policy_kwargs": {"net_arch": [128, 128]},
 }
-TOTAL_TIMESTEPS = 3_000_000
+TOTAL_TIMESTEPS = 1_000_000
 CHECKPOINT_FREQ = 100_000
 RL_SEED = 0  # fixed RL seed so only maze distribution differs
 

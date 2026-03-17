@@ -121,18 +121,33 @@ def run_manova(
     """
     from statsmodels.multivariate.manova import MANOVA
 
-    # Combine data
-    prng_subset = prng_metrics[columns].copy()
-    qrng_subset = qrng_metrics[columns].copy()
+    # Filter out zero-variance columns (cause singular matrix)
+    valid_cols = []
+    combined_prng = prng_metrics[columns]
+    combined_qrng = qrng_metrics[columns]
+    for col in columns:
+        if combined_prng[col].std() > 0 and combined_qrng[col].std() > 0:
+            valid_cols.append(col)
+        else:
+            print(f"  Dropping '{col}' from MANOVA (zero variance)")
+
+    if len(valid_cols) < 2:
+        print("\n  Skipping MANOVA: need at least 2 variables with non-zero variance")
+        return {"manova_result": None}
+
+    prng_subset = prng_metrics[valid_cols].copy()
+    qrng_subset = qrng_metrics[valid_cols].copy()
     prng_subset["group"] = "prng"
     qrng_subset["group"] = "qrng"
     combined = pd.concat([prng_subset, qrng_subset], ignore_index=True)
 
-    formula = " + ".join(columns) + " ~ group"
-    manova = MANOVA.from_formula(formula, data=combined)
-    result = manova.mv_test()
-
-    print("\n=== MANOVA Results ===")
-    print(result.summary())
-
-    return {"manova_result": result}
+    formula = " + ".join(valid_cols) + " ~ group"
+    try:
+        manova = MANOVA.from_formula(formula, data=combined)
+        result = manova.mv_test()
+        print("\n=== MANOVA Results ===")
+        print(result.summary())
+        return {"manova_result": result}
+    except Exception as e:
+        print(f"\n  MANOVA failed: {e}")
+        return {"manova_result": None}
